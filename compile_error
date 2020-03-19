@@ -1,0 +1,92 @@
+[33mcommit 5fc0b113ba961cce7cd0957e5d0ba243f0c34ab2[m
+Author: Osen Liu <kasugaosaka@gmail.com>
+Date:   Fri Mar 13 06:56:45 2020 +0000
+
+    fix compile error
+
+[1mdiff --git a/aws-cpp-sdk-core-tests/utils/FileSystemUtilsTest.cpp b/aws-cpp-sdk-core-tests/utils/FileSystemUtilsTest.cpp[m
+[1mindex 733d131598..102d65f5bd 100644[m
+[1m--- a/aws-cpp-sdk-core-tests/utils/FileSystemUtilsTest.cpp[m
+[1m+++ b/aws-cpp-sdk-core-tests/utils/FileSystemUtilsTest.cpp[m
+[36m@@ -18,6 +18,7 @@[m
+ #include <aws/core/utils/memory/stl/AWSSet.h>[m
+ #include <aws/external/gtest.h>[m
+ #include <fstream>[m
+[32m+[m[32m#include <cerrno>[m
+ #if defined(HAS_PATHCONF)[m
+ #include <unistd.h>[m
+ #include <climits>[m
+[1mdiff --git a/aws-cpp-sdk-core/include/aws/core/utils/stream/SimpleStreamBuf.h b/aws-cpp-sdk-core/include/aws/core/utils/stream/SimpleStreamBuf.h[m
+[1mindex 3f5fda5005..ba6f61da1f 100644[m
+[1m--- a/aws-cpp-sdk-core/include/aws/core/utils/stream/SimpleStreamBuf.h[m
+[1m+++ b/aws-cpp-sdk-core/include/aws/core/utils/stream/SimpleStreamBuf.h[m
+[36m@@ -15,7 +15,7 @@[m
+ */[m
+ [m
+ #pragma once[m
+[31m-[m
+[32m+[m[32m#include <stdio.h>[m
+ #include <aws/core/Core_EXPORTS.h>[m
+ #include <aws/core/utils/memory/stl/AWSString.h>[m
+ #include <aws/core/utils/memory/stl/AWSVector.h>[m
+[1mdiff --git a/aws-cpp-sdk-core/source/net/linux-shared/SimpleUDP.cpp b/aws-cpp-sdk-core/source/net/linux-shared/SimpleUDP.cpp[m
+[1mindex 6484e53148..fec821e021 100644[m
+[1m--- a/aws-cpp-sdk-core/source/net/linux-shared/SimpleUDP.cpp[m
+[1m+++ b/aws-cpp-sdk-core/source/net/linux-shared/SimpleUDP.cpp[m
+[36m@@ -22,6 +22,7 @@[m
+ #include <fcntl.h>[m
+ #include <cassert>[m
+ #include <string.h>[m
+[32m+[m[32m#include <errno.h>[m
+ #include <aws/core/net/SimpleUDP.h>[m
+ #include <aws/core/utils/logging/LogMacros.h>[m
+ [m
+[1mdiff --git a/aws-cpp-sdk-core/source/platform/linux-shared/FileSystem.cpp b/aws-cpp-sdk-core/source/platform/linux-shared/FileSystem.cpp[m
+[1mindex cfca71660a..ef33313137 100644[m
+[1m--- a/aws-cpp-sdk-core/source/platform/linux-shared/FileSystem.cpp[m
+[1m+++ b/aws-cpp-sdk-core/source/platform/linux-shared/FileSystem.cpp[m
+[36m@@ -27,6 +27,7 @@[m
+ #include <dirent.h>[m
+ #include <errno.h>[m
+ #include <climits>[m
+[32m+[m[32m#include <cstdio>[m
+ [m
+ #include <cassert>[m
+ #ifdef __APPLE__[m
+[1mdiff --git a/aws-cpp-sdk-core/source/platform/linux-shared/OSVersionInfo.cpp b/aws-cpp-sdk-core/source/platform/linux-shared/OSVersionInfo.cpp[m
+[1mindex 4150c351cd..1a5c01ed8d 100644[m
+[1m--- a/aws-cpp-sdk-core/source/platform/linux-shared/OSVersionInfo.cpp[m
+[1m+++ b/aws-cpp-sdk-core/source/platform/linux-shared/OSVersionInfo.cpp[m
+[36m@@ -17,6 +17,7 @@[m
+ #include <aws/core/utils/memory/stl/AWSStringStream.h>[m
+ #include <aws/core/utils/StringUtils.h>[m
+ #include <sys/utsname.h>[m
+[32m+[m[32m#include <stdio.h>[m
+ [m
+ namespace Aws[m
+ {[m
+[1mdiff --git a/aws-cpp-sdk-core/source/utils/StringUtils.cpp b/aws-cpp-sdk-core/source/utils/StringUtils.cpp[m
+[1mindex 14fc2b33e8..71df256b48 100644[m
+[1m--- a/aws-cpp-sdk-core/source/utils/StringUtils.cpp[m
+[1m+++ b/aws-cpp-sdk-core/source/utils/StringUtils.cpp[m
+[36m@@ -333,7 +333,7 @@[m [mlong long StringUtils::ConvertToInt64(const char* source)[m
+ #ifdef __ANDROID__[m
+     return atoll(source);[m
+ #else[m
+[31m-    return std::atoll(source);[m
+[32m+[m[32m    return atoll(source);[m
+ #endif // __ANDROID__[m
+ }[m
+ [m
+[1mdiff --git a/testing-resources/source/TestingEnvironment.cpp b/testing-resources/source/TestingEnvironment.cpp[m
+[1mindex a6b37e15e5..fb258d4791 100644[m
+[1m--- a/testing-resources/source/TestingEnvironment.cpp[m
+[1m+++ b/testing-resources/source/TestingEnvironment.cpp[m
+[36m@@ -20,6 +20,7 @@[m
+ #include <aws/testing/platform/PlatformTesting.h>[m
+ [m
+ #include <sstream>[m
+[32m+[m[32m#include <stdio.h>[m
+ [m
+ namespace Aws[m
+ {[m
